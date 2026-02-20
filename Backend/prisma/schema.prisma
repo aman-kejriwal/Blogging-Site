@@ -1,0 +1,33 @@
+// generator client {
+//   provider = "prisma-client"
+//   output   = "../src/generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+// }
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String?
+  username    String   @unique
+  password String
+  blogs    Blog[]
+}
+
+model Blog {
+  id        String   @id @default(uuid())
+  authorId  String
+  content   String
+  title     String
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+}
