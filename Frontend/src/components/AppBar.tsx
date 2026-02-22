@@ -1,6 +1,8 @@
 import { Avatar } from "./Avatar"
+import { useNavigate } from "react-router-dom"
 
 export const AppBar = () => {
+    const navigate = useNavigate();
     return <div>
         <div className="px-12 py-3 flex">
             <div className="flex">
@@ -8,7 +10,7 @@ export const AppBar = () => {
                 <h3 className="self-center px-4 text-lg font-serif">Draft in Kirags</h3>
             </div>
             <div className="ml-auto flex gap-5">
-                <button className="bg-green-500 rounded-full px-4 py-2 mr-4 h-min self-center">Publish</button>
+                <button className="bg-green-500 rounded-full px-4 py-2 mr-4 h-min self-center" onClick={() => navigate("/publish")}>Publish</button>
                 <button>
                     <img className="h-6 w-6" src="/more.png" alt="Button Icon" />
                 </button>
