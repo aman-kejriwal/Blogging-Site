@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { Avatar } from "./Avatar";
+import { Link } from "react-router-dom";
 
 type BlogCardProps = {
+    id:string,
     name: string,
     date: Date,
     title: string
     content: string,
 }
-export const BlogCard = ({ name, date, title, content }: BlogCardProps) => {
+export const BlogCard = ({id,  name, date, title, content }: BlogCardProps) => {
     return <div>
         <About name={name} date={date} />
-        <BlogContent title={title} content={content} />
+        <BlogContent id={id} title={title} content={content} />
     </div>
 }
-const BlogContent = ({ title, content }: { title: string, content: string }) => {
+const BlogContent = ({ id, title, content }: { id:string, title: string, content: string }) => {
     return (
         <div className="max-w-5xl">
             <div className="flex mt-1">
                 <div className="flex-1 pr-9">
+                    <Link to={`/blog/:${id}`}>
+                    <div className="pb-10">
                     <h1 className="font-extrabold text-2xl pb-3">
                         {title}
                     </h1>
@@ -31,6 +35,8 @@ const BlogContent = ({ title, content }: { title: string, content: string }) => 
                             return <h3>{text}</h3>;
                         }
                     })()}
+                    </div>
+                    </Link>
                     <ContentFeatures content={content} ></ContentFeatures>
                 </div>
                 <img className="w-20" src="/captain_america.png" alt="" />
@@ -49,7 +55,7 @@ const ContentFeatures = ({ content }: { content: string }) => {
         // }, 2000); // keep gray for 2 seconds
     };
 
-    return <div className="mt-10 flex">
+    return <div className="flex">
         <div className="bg-slate-100 rounded-3xl px-3 py-2 w-max font-light">
             Side Hustle
         </div>

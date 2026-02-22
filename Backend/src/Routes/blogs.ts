@@ -10,44 +10,44 @@ export const blogRoute = new Hono<{
         DATABASE_URL: string;
         JWT_SECRET_KEY: string;
     },
-    Variables:{
-        userId:string
+    Variables: {
+        userId: string
     }
 }>()
 
-blogRoute.use('/*',  async (c, next) => {
+blogRoute.use('/*', async (c, next) => {
     const authHeader = c.req.header("Authorization") || "";
     const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : authHeader;
     try {
         const user = await verify(token, c.env.JWT_SECRET_KEY, 'HS256');
-        if(user){
+        if (user) {
             c.set("userId", (user as { Id: string }).Id);
             await next();
         }
         else {
             c.status(403);
             return c.json({
-                 message:"you are not logged In"
+                message: "you are not logged In"
             });
         }
     } catch (error) {
         c.status(403);
         return c.json({
-             message:"you are not logged In"
+            message: "you are not logged In"
         });
     }
 })
 
 blogRoute.post('/', async (c) => {
     const body = await c.req.json();
-    const parsed=CreateBlogInputs.safeParse(body);
-    if(!parsed.success){
+    const parsed = CreateBlogInputs.safeParse(body);
+    if (!parsed.success) {
         c.status(411);
         return c.json({
-            Message:'Check the Inputs'
+            Message: 'Check the Inputs'
         })
     }
-    const authorId= c.get("userId");
+    const authorId = c.get("userId");
     const prisma = new PrismaClient({
         accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
@@ -66,17 +66,17 @@ blogRoute.post('/', async (c) => {
     } catch (error) {
         c.status(400);
         return c.json({
-            Message:"Error while creating a blog post"
+            Message: "Error while creating a blog post"
         });
     }
 })
 blogRoute.put('/', async (c) => {
     const body = await c.req.json();
-    const parsed=UpdateBlogInputs.safeParse(body);
-    if(!parsed.success){
+    const parsed = UpdateBlogInputs.safeParse(body);
+    if (!parsed.success) {
         c.status(411);
         return c.json({
-            Message:'Check the Inputs'
+            Message: 'Check the Inputs'
         })
     }
     const prisma = new PrismaClient({
@@ -92,14 +92,14 @@ blogRoute.put('/', async (c) => {
                 content: body.content,
             }
         })
-        
+
         return c.json({
             blog
         });
     } catch (error) {
         c.status(400);
         return c.json({
-            Message:'Error while updating the Blog post'
+            Message: 'Error while updating the Blog post'
         });
     }
 })
@@ -110,13 +110,13 @@ blogRoute.get('/bulk', async (c) => {
     }).$extends(withAccelerate())
     try {
         const blog = await prisma.blog.findMany({
-            select:{
-                title:true,
-                content:true,
-                id:true,
-                author:{
-                    select:{
-                        name:true
+            select: {
+                title: true,
+                content: true,
+                id: true,
+                author: {
+                    select: {
+                        name: true
                     }
                 }
             }
@@ -134,7 +134,7 @@ blogRoute.get('/bulk', async (c) => {
 })
 
 blogRoute.get('/:id', async (c) => {
-    const id= c.req.param("id");
+    const id = c.req.param("id");
     const prisma = new PrismaClient({
         accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
@@ -142,6 +142,17 @@ blogRoute.get('/:id', async (c) => {
         const blog = await prisma.blog.findFirst({
             where: {
                 id: id
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
             }
         });
         return c.json({

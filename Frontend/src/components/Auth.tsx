@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Backend_URL } from '../../config';
 
 export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [postInput, setPostInputs] = useState({
         name: "",
         email: "",
@@ -12,7 +12,7 @@ export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
     })
     async function sendRequest() {
         try {
-            const response = await axios.post(`${Backend_URL}/api/v1/user/${type=='signin'?'signin':'signup'}`, postInput);
+            const response = await axios.post(`${Backend_URL}/api/v1/user/${type == 'signin' ? 'signin' : 'signup'}`, postInput);
             const jwt = await response.data;
             localStorage.setItem("token", jwt);
             navigate('/blogs')
