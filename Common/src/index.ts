@@ -23,7 +23,7 @@ export const CreateBlogInputs = z.object({
 
 //Update Blog Inputs
 export const UpdateBlogInputs = z.object({
-    id:z.string,
+    id: z.string,
     title: z.string,
     content: z.string,
 })
