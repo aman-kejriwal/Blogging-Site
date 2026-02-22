@@ -1,4 +1,3 @@
-import { AppBar } from "../components/AppBar"
 import { BlogCard } from "../components/BlogCard"
 import { useBlogs } from "../hooks";
 export const Blogs = () => {
@@ -10,7 +9,6 @@ export const Blogs = () => {
   }
   return <div>
     <div style={{ position: "sticky", top: 0, zIndex: 100, background: "white" }}>
-      <AppBar />
     </div>
     <div className="flex justify-center">
       <div>
