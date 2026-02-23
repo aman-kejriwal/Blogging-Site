@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { Avatar } from "./Avatar"
 import { useNavigate, useLocation } from "react-router-dom"
+import axios from "axios";
+import { Backend_URL } from "../../config";
 
-export const AppBar = () => {
+export const AppBar = ({ title, content }: { title: string, content: string }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isEditHovered, setIsEditHovered] = useState(false);
@@ -26,7 +28,26 @@ export const AppBar = () => {
                 }
                 {isPublishPage &&
                     <div className="flex items-center gap-2">
-                        <button className="text-black bg-green-500 rounded-full px-4 py-2 mr-4 h-min self-center hover:text-slate-700 font-light">
+                        <button className="text-black bg-green-500 rounded-full px-4 py-2 mr-4 h-min self-center hover:text-slate-700 font-light" onClick={() => {
+                            const token = localStorage.getItem("token");
+                            if (!token) {
+                                navigate("/signin");
+                                return;
+                            }
+                            axios.post(`${Backend_URL}/api/v1/blog`, {
+                                title: title,
+                                content: content
+                            }, {
+                                headers: {
+                                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                                }
+                            }).then(res => {
+                                console.log(res.data);
+                                navigate("/blogs");
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        }}>
                             Publish</button>
                     </div>
                 }

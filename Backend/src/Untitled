@@ -1,9 +1,0 @@
-// import { email, z } from "zod";
-// import { parseSigned } from "hono/utils/cookie";
-
-
-// export const SignInInputs=z.object({
-//     email:z.email(),
-//     password:z.string().min(6),
-//     name:z.string().optional()
-// });

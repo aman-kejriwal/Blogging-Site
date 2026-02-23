@@ -3,8 +3,9 @@
   "name": "week-13-offline",
   "main": "src/index.ts",
   "compatibility_date": "2026-02-07",
-"vars": {
-  "DATABASE_URL":"prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19QeGlsWS0zVE1DcjJyOGVjY3kwTzEiLCJhcGlfa2V5IjoiMDFLR1c1Vk45UkVSQTY2Q1pYRkRUTkc4QVYiLCJ0ZW5hbnRfaWQiOiI0YzdkNjRmMjQzMzdkNjEyMTBjNzg3ZmJkZGFiYWMxMTBiYWQ3MjM1NDE5Njk5OWFjMTVhMzJkOTEzMmUxMzg4IiwiaW50ZXJuYWxfc2VjcmV0IjoiYzJjNjQ2YWUtZjI5OS00YWJjLWIwZWEtNDVlNzQxZmFmMzc1In0.sjB75E5MU5zgm9_KrbGw3HmIqlJWchZs_LEfoCNkN7c",
-  "JWT_SECRET_KEY":"hbdvvadjadjvjadvjbcad"
-},
+  "vars": {
+    // "DATABASE_URL":"prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19QeGlsWS0zVE1DcjJyOGVjY3kwTzEiLCJhcGlfa2V5IjoiMDFLR1c1Vk45UkVSQTY2Q1pYRkRUTkc4QVYiLCJ0ZW5hbnRfaWQiOiI0YzdkNjRmMjQzMzdkNjEyMTBjNzg3ZmJkZGFiYWMxMTBiYWQ3MjM1NDE5Njk5OWFjMTVhMzJkOTEzMmUxMzg4IiwiaW50ZXJuYWxfc2VjcmV0IjoiYzJjNjQ2YWUtZjI5OS00YWJjLWIwZWEtNDVlNzQxZmFmMzc1In0.sjB75E5MU5zgm9_KrbGw3HmIqlJWchZs_LEfoCNkN7c",
+    "DATABASE_URL": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19MLTIzekhsZ0hUUWh6MDFmeHFqMVAiLCJhcGlfa2V5IjoiMDFLSjVTS0pZSENaUUtNRjBCQURSQU1QUU4iLCJ0ZW5hbnRfaWQiOiI0M2Y2ZTJkNTEwYTQzMWVlMTI4NGFlM2M2YTJmY2IyN2E1NmVmODllNDg4NjUwNTczN2I1YzVmMmE3NjgyMjBkIiwiaW50ZXJuYWxfc2VjcmV0IjoiNzRjOTUyOTQtM2Y3My00M2MzLWE1YWUtNDFlYzFmMmUxZDQ2In0.JJ98rJ8KKrNJWQ_lBmkWdZW8GZ8DBrFeCSk8lxHtfOs",
+    "JWT_SECRET_KEY": "hbdvvadjadjvjadvjbcad"
+  },
 }
