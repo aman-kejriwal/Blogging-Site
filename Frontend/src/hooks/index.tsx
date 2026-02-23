@@ -8,7 +8,7 @@ type Blog = {
     id: string,
     author: {
         name: string
-    }
+    } | null
 }
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);

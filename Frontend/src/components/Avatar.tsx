@@ -4,7 +4,10 @@ export const Avatar = ({ name }: { name: string | null }) => {
             <span className="font-medium text-body">{(() => {
                 if (!name) return "UA";
                 const words = name.split(" ");
-                return words[0][0] + "" + words[1][0];
+                if (words.length > 1) {
+                    return words[0][0] + words[1][0];
+                }
+                return words[0][0];
             })()}</span>
         </div>
     </button>

@@ -11,12 +11,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/publish" element={<Publish />} />
           <Route element={<Layout />}>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/blog/:id" element={<Blog />} />
             <Route path="/blogs" element={<Blogs />} />
-            <Route path='/publish' element={<Publish />} />
           </Route>
         </Routes>
       </BrowserRouter>
