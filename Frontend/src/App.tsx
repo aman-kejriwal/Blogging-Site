@@ -7,7 +7,6 @@ import { Layout } from './Pages/Layout'
 import { Publish } from './Pages/Publish'
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
