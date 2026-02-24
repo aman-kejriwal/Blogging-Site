@@ -20,7 +20,14 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
                     <div className="flex items-center gap-2"
                         onMouseEnter={() => setIsEditHovered(true)}
                         onMouseLeave={() => setIsEditHovered(false)}
-                        onClick={() => navigate("/publish")}>
+                        onClick={() => {
+                            const token = localStorage.getItem("token");
+                            if (token) {
+                                navigate("/publish");
+                            } else {
+                                navigate("/signin");
+                            }
+                        }}>
                         <img className="h-6 w-6" src={isEditHovered ? "./edit_Dark.png" : "./edit.png"} alt="write.png" />
                         <button className="text-slate-500 rounded-full pr-4 py-2 mr-4 h-min self-center hover:text-slate-700 font-light">
                             Write</button>

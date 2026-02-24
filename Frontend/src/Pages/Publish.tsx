@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppBar } from "../components/AppBar";
+import { useNavigate } from "react-router-dom";
+
 export const Publish = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/signin");
+        }
+    }, [navigate]);
 
     const autoGrow = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         e.target.style.height = "auto";

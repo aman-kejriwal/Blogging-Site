@@ -16,8 +16,14 @@ export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
             const jwt = await response.data;
             localStorage.setItem("token", jwt);
             navigate('/blogs')
-        } catch (error) {
-            alert(`Error while ${type} the user`)
+        } catch (error: any) {
+            console.log(error)
+            const errorMessage = error.response?.data?.message || error.response?.data?.Message || error.response?.data?.error;
+            if (errorMessage) {
+                alert(errorMessage);
+            } else {
+                alert(`Error while ${type} the user`);
+            }
         }
     }
     return <div className="flex justify-center">

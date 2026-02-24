@@ -11,5 +11,4 @@ export const Avatar = ({ name }: { name: string | null }) => {
             })()}</span>
         </div>
     </button>
-
 }

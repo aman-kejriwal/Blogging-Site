@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Backend_URL } from "../../config";
 import { Avatar } from "../components/Avatar";
+import { BlogSkeleton } from "../components/BlogSkeleton";
 
 export const Blog = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const newId = id?.slice(1);
 
   const [data, setData] = useState<any>(null);
@@ -14,6 +16,10 @@ export const Blog = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
     axios.get(`${Backend_URL}/api/v1/blog/${newId}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -31,7 +37,7 @@ export const Blog = () => {
       });
   }, [newId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="flex justify-center"><BlogSkeleton /></div>;
   if (error) return <div>{error}</div>;
 
   return (

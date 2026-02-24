@@ -18,7 +18,7 @@ userRoute.post('/signup', async (c) => {
   if (!parsed.success) {
     c.status(403);
     return c.json({
-      Message: 'Check the Inputs'
+      message: 'Check the Inputs'
     })
   }
   const name = body.name;
