@@ -28,6 +28,7 @@ export const useBlogs = () => {
                 setBlogs(response.data.blog);
             })
             .catch((error) => {
+                alert(error.response.data.message);
                 console.error(error);
                 setLoading(false);
                 navigate('/signin')

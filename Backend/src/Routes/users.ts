@@ -18,7 +18,7 @@ userRoute.post('/signup', async (c) => {
   if (!parsed.success) {
     c.status(403);
     return c.json({
-      message: 'Check the Inputs'
+      error: 'Check the Inputs'
     })
   }
   const name = body.name;
@@ -59,7 +59,7 @@ userRoute.post('/signin', async (c) => {
   if (!parsed.success) {
     c.status(411);
     return c.json({
-      Message: 'Check the Inputs'
+      error: 'Check the Inputs'
     })
   };
   const username = body?.email;
@@ -78,7 +78,7 @@ userRoute.post('/signin', async (c) => {
     });
     if (!user || user.password !== password) {
       c.status(403);
-      return c.json({ message: 'Invalid Creds' });
+      return c.json({ error: 'Invalid Creds' });
     }
     const jwt = await sign({ Id: user.id }, c.env.JWT_SECRET_KEY);
     return c.text(jwt);

@@ -22,18 +22,18 @@ blogRoute.use('/*', async (c, next) => {
         const user = await verify(token, c.env.JWT_SECRET_KEY, 'HS256');
         if (user) {
             c.set("userId", (user as { Id: string }).Id);
-            await next();
+            await next();   
         }
         else {
             c.status(403);
             return c.json({
-                message: "you are not logged In"
+                error: "you are not logged In"
             });
         }
     } catch (error) {
         c.status(403);
         return c.json({
-            message: "you are not logged In"
+            error: "you are not logged In"
         });
     }
 })
@@ -44,7 +44,7 @@ blogRoute.post('/', async (c) => {
     if (!parsed.success) {
         c.status(411);
         return c.json({
-            Message: 'Check the Inputs'
+            error: 'Check the Inputs'
         })
     }
     const authorId = c.get("userId");
@@ -66,7 +66,7 @@ blogRoute.post('/', async (c) => {
     } catch (error) {
         c.status(400);
         return c.json({
-            Message: "Error while creating a blog post"
+            error: "Error while creating a blog post"
         });
     }
 })
@@ -76,7 +76,7 @@ blogRoute.put('/', async (c) => {
     if (!parsed.success) {
         c.status(411);
         return c.json({
-            Message: 'Check the Inputs'
+            error: 'Check the Inputs'
         })
     }
     const prisma = new PrismaClient({
@@ -99,7 +99,7 @@ blogRoute.put('/', async (c) => {
     } catch (error) {
         c.status(400);
         return c.json({
-            Message: 'Error while updating the Blog post'
+            error: 'Error while updating the Blog post'
         });
     }
 })
@@ -128,7 +128,7 @@ blogRoute.get('/bulk', async (c) => {
     } catch (error) {
         c.status(400);
         return c.json({
-            Message: 'Error while fetching the all blog posts'
+                error: 'Error while fetching the all blog posts'
         })
     }
 })
@@ -161,7 +161,7 @@ blogRoute.get('/:id', async (c) => {
     } catch (error) {
         c.status(400);
         return c.json({
-            Message: 'Error while fetching the first blog post'
+            error: 'Error while fetching the first blog post'
         })
     }
 })

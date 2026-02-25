@@ -5,6 +5,7 @@ import { Backend_URL } from '../../config';
 
 export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
     const navigate = useNavigate();
+    const [passwordVisible, setPasswordVisible] = useState("password");
     const [postInput, setPostInputs] = useState({
         name: "",
         email: "",
@@ -54,12 +55,22 @@ export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
                     email: e.target.value
                 })
             }} />
-            <LabelledInput label="Password" placeholder="12345" type="password" onChange={(e) => {
-                setPostInputs({
-                    ...postInput,
-                    password: e.target.value
-                })
-            }} />
+            <div className="py-2">
+                <label className="block mb-1.5 text-sm font-semibold text-heading">Password</label>
+                <div className="w-auto flex border border-slate-200 border-default-medium rounded-sm focus-within:ring-2 focus-within:ring-brand focus-within:border-brand focus-within:ring-blue-600">
+                    <input type={passwordVisible} id="first_name" className="w-full border-none bg-transparent text-heading text-sm rounded-base block px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-0" placeholder="12345" onChange={(e) => {
+                        setPostInputs({
+                            ...postInput,
+                            password: e.target.value
+                        })
+                    }} required />
+                    <button className="h-10 w-10 ml-auto pr-3" onClick={() => {
+                        setPasswordVisible(passwordVisible == "password" ? "text" : "password")
+                    }}>
+                        <img src={passwordVisible == "password" ? "/eye_closed.png" : "/eye_open.png"} alt="" />
+                    </button>
+                </div>
+            </div>
             <button onClick={sendRequest} type="button" className="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-md text-sm px-4 py-2.5 my-2 focus:outline-none bg-black text-white">
                 {type === 'signin' ? 'Sign In' : 'Sign Up'}
             </button>
