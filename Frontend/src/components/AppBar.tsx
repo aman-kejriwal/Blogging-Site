@@ -1,14 +1,27 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Avatar } from "./Avatar"
 import { useNavigate, useLocation } from "react-router-dom"
 import axios from "axios";
 import { Backend_URL } from "../../config";
+import { DropDownMenu } from "./DropDownMenu";
 
 export const AppBar = ({ title, content }: { title: string, content: string }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isEditHovered, setIsEditHovered] = useState(false);
+    const [open, setOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const isPublishPage = location.pathname === "/publish";
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
     return <div>
         <div className="px-12 py-3 flex">
             <div className="flex">
@@ -64,7 +77,12 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
                 <button>
                     <img className="h-6 self-center" src="/bell.png" alt="bell" />
                 </button>
-                <Avatar name="Aman Kumar" />
+                <button className="rounded-full" onClick={() => {
+                    setOpen(!open);
+                }}>
+                    <Avatar name="Aman Kumar" />
+                </button>
+                {open && <DropDownMenu name="Aman Kumar" />}
             </div>
         </div>
         <div className="bg-slate-200 h-px"></div>
