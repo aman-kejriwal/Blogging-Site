@@ -5,20 +5,22 @@ export const DropDownMenu = ({ name }: { name: string }) => {
     return (
         <div className=" shadow-lg absolute right-10 rounded-md top-20 w-1/6 z-2 bg-white">
             {/* <div id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation" className="text-black inline-flex items-center justify-center bg-white box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" > */}
-            <button className="flex pl-4 pr-10 gap-3 pt-3">
-                <Avatar name={name} size={14} />
+            <button className="flex pl-4 pr-10 gap-3 pt-3 group">
+                <Avatar name={name} size={10} />
                 <div className="hover:text-black items-center flex flex-col justify-center" onClick={() => { }}>
-                    <p className="text-slate-500 font-normal pl-2 self-center text-10">{name}</p>
-                    <p className="text-slate-500 font-normal pl-2 text-xs">View profile</p>
+                    <p className="text-slate-500 font-normal pl-2 self-center text-10 group-hover:text-black">{name}</p>
+                    <p className="text-slate-500 font-normal pl-2 text-xs group-hover:text-black">View profile</p>
                 </div>
             </button>
-            <button className="pl-4 flex pr-15 gap-3 pt-5">
-                <img className="h-6 w-6" src="/setting.png" alt="" />
-                <p className="text-slate-500 font-normal pl-2 self-center text-10">Settings</p>
+            <button className="pl-4 flex pr-15 gap-3 pt-5 group">
+                <img className="h-6 w-6 group-hover:hidden" src="/setting.png" alt="" />
+                <img className="h-6 w-6 group-hover:block hidden" src="/setting_black.png" alt="" />
+                <p className={`font-normal pl-2 self-center text-10 text-slate-500 group-hover:text-black`}>Settings</p>
             </button>
-            <button className="pl-4 flex pr-15 gap-3 pt-5">
-                <img className="h-6 w-6" src="/question.png" alt="" />
-                <p className="text-slate-500 font-normal pl-2 self-center text-10">Help</p>
+            <button className="pl-4 flex pr-15 gap-3 pt-5 group">
+                <img className="h-6 w-6 group-hover:hidden" src="/question.png" alt="" />
+                <img className="h-6 w-6 group-hover:block hidden" src="/question_black.png" alt="" />
+                <p className="text-slate-500 font-normal pl-2 self-center text-10 group-hover:text-black">Help</p>
             </button>
             <div className="bg-slate-200 my-5 h-px"></div>
             <div className="flex items-center">
@@ -27,11 +29,11 @@ export const DropDownMenu = ({ name }: { name: string }) => {
             </div>
             <button className="pl-4 text-slate-500 font-light hover:text-black pt-3">Apply to the Partner Program</button>
             <div className="bg-slate-200 my-5 h-px"></div>
-            <button className="pl-4 text-slate-500 font-light hover:text-black pt-1" onClick={() => {
+            <button className="pl-4 text-slate-500 font-light hover:text-black pt-1 group" onClick={() => {
                 localStorage.removeItem("token");
                 navigate("/getstarted");
             }}>Sign Out <br />
-                <p className="text-slate-500 font-normal pl-2 text-xs pt-1">{name}</p>
+                <p className="text-slate-500 font-normal pl-2 text-xs pt-1 group-hover:text-black">{name}</p>
             </button>
             <div className="bg-slate-200 my-5 h-px"></div>
             <div className="inline-flex gap-2 pl-4 max-w-1/2 overflow-y-scroll">

@@ -77,12 +77,14 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
                 <button>
                     <img className="h-6 self-center" src="/bell.png" alt="bell" />
                 </button>
-                <button className="rounded-full" onClick={() => {
-                    setOpen(!open);
-                }}>
-                    <Avatar name="Aman Kumar" />
-                </button>
-                {open && <DropDownMenu name="Aman Kumar" />}
+                <div ref={dropdownRef} className="">
+                    <button className="rounded-full" onClick={() => {
+                        setOpen(!open);
+                    }}>
+                        <Avatar name="Aman Kumar" />
+                    </button>
+                    {open && <DropDownMenu name="Aman Kumar" />}
+                </div>
             </div>
         </div>
         <div className="bg-slate-200 h-px"></div>
