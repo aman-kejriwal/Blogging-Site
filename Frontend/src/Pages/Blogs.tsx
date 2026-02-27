@@ -1,7 +1,6 @@
 import { BlogCard } from "../components/BlogCard"
 import { useBlogs } from "../hooks";
 import { BlogSkeleton } from "../components/BlogSkeleton";
-import { AppBar } from "../components/AppBar";
 
 export const Blogs = () => {
   const { blogs, loading } = useBlogs();
@@ -21,7 +20,7 @@ export const Blogs = () => {
   return <div>
     <div style={{ position: "sticky", top: 0, zIndex: 100, background: "white" }}>
     </div>
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-10">
       <div>
         {blogs.map((blog) => (
           <BlogCard

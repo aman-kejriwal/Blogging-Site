@@ -25,7 +25,9 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
     return <div>
         <div className="px-12 py-3 flex">
             <div className="flex">
-                <img className="h-14" src="/medium.png" alt="" />
+                <img className="h-14 hover:cursor-pointer" src="/medium.png" alt="" onClick={() => {
+                    navigate("/blogs");
+                }} />
                 <h3 className="self-center px-4 text-lg font-serif">Draft in Kirags</h3>
             </div>
             <div className="ml-auto flex gap-5 items-center">
@@ -41,7 +43,7 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
                                 navigate("/signin");
                             }
                         }}>
-                        <img className="h-6 w-6" src={isEditHovered ? "./edit_Dark.png" : "./edit.png"} alt="write.png" />
+                        <img className="h-6 w-6" src={isEditHovered ? "/edit_Dark.png" : "/edit.png"} alt="" />
                         <button className="text-slate-500 rounded-full pr-4 py-2 mr-4 h-min self-center hover:text-slate-700 font-light">
                             Write</button>
                     </div>
@@ -81,7 +83,7 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
                     <button className="rounded-full" onClick={() => {
                         setOpen(!open);
                     }}>
-                        <Avatar name="Aman Kumar" />
+                        <Avatar name="Aman Kumar" open={open} />
                     </button>
                     {open && <DropDownMenu name="Aman Kumar" />}
                 </div>
