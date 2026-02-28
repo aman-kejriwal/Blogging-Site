@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 export const DropDownMenu = ({ name, username }: { name: string, username: string }) => {
     const navigate = useNavigate();
     return (
-        <div className="shadow-lg absolute right-10 rounded-md top-20 w-1/6 z-2 bg-white">
+        <div className="shadow-lg absolute right-10 rounded-md top-20 w-1/6 z-2 bg-white border border-slate-200">
             {/* <div id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation" className="text-black inline-flex items-center justify-center bg-white box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" > */}
             <button className="flex pl-6 pr-10 gap-3 pt-3 group">
                 <Avatar name={name} size={10} />
