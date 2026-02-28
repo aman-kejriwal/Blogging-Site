@@ -5,6 +5,7 @@ import axios from "axios";
 import { Backend_URL } from "../../config";
 import { DropDownMenu } from "./DropDownMenu";
 import { Link } from "react-router-dom";
+import { useUser } from "../hooks";
 
 export const AppBar = ({ title, content }: { title: string, content: string }) => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const isPublishPage = location.pathname === "/publish";
+    const { user } = useUser();
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -80,13 +82,14 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
                 <button>
                     <img className="h-6 self-center" src="/bell.png" alt="bell" />
                 </button>
+                {open && <div className="fixed inset-0 z-1" onClick={() => setOpen(false)}></div>}
                 <div ref={dropdownRef} className="">
                     <button className="rounded-full" onClick={() => {
                         setOpen(!open);
                     }}>
-                        <Avatar name="Aman Kumar" open={open} />
+                        <Avatar name={user?.name} open={open} />
                     </button>
-                    {open && <DropDownMenu name="Aman Kumar" />}
+                    {open && <DropDownMenu name={user?.name} username={user?.username} />}
                 </div>
             </div>
         </div>
