@@ -36,6 +36,13 @@ userRoute.post('/signup', async (c) => {
   }).$extends(withAccelerate());
 
   try {
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
+    });
+    if (existingUser) {
+      c.status(403);
+      return c.json({ error: 'User already exists' });
+    }
     const user = await prisma.user.create({
       data: {
         username,
@@ -49,7 +56,7 @@ userRoute.post('/signup', async (c) => {
   } catch (error) {
     console.log("Error", error);
     c.status(403);
-    return c.json({ error: 'Invalid' });
+    return c.json({ error: 'Invalid Credentials' });
   }
 });
 
@@ -78,7 +85,7 @@ userRoute.post('/signin', async (c) => {
     });
     if (!user || user.password !== password) {
       c.status(403);
-      return c.json({ error: 'Invalid Creds' });
+      return c.json({ error: 'Either username or password is incorrect' });
     }
     const jwt = await sign({ Id: user.id }, c.env.JWT_SECRET_KEY);
     return c.text(jwt);

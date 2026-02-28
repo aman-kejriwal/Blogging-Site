@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 import axios from "axios";
 import { Backend_URL } from "../../config";
 import { DropDownMenu } from "./DropDownMenu";
+import { Link } from "react-router-dom";
 
 export const AppBar = ({ title, content }: { title: string, content: string }) => {
     const navigate = useNavigate();
@@ -25,9 +26,9 @@ export const AppBar = ({ title, content }: { title: string, content: string }) =
     return <div>
         <div className="px-12 py-3 flex">
             <div className="flex">
-                <img className="h-14 hover:cursor-pointer" src="/medium.png" alt="" onClick={() => {
-                    navigate("/blogs");
-                }} />
+                <Link to={"/blogs"}>
+                    <img className="h-14 hover:cursor-pointer" src="/medium.png" alt="" />
+                </Link>
                 <h3 className="self-center px-4 text-lg font-serif">Draft in Kirags</h3>
             </div>
             <div className="ml-auto flex gap-5 items-center">
