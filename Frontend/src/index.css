@@ -1,3 +1,195 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        color: #1c1917;
+        background-color: #fafaf9;
+        line-height: 1.6;
+    }
+
+    ::selection {
+        background-color: rgba(26, 137, 23, 0.15);
+        color: #0d470b;
+    }
+}
+
+@layer components {
+
+    /* Glassmorphism card */
+    .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-strong {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* Premium button styles */
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1c1917;
+        color: white;
+        font-weight: 500;
+        border-radius: 9999px;
+        padding: 0.625rem 1.5rem;
+        transition: all 0.3s ease-out;
+    }
+
+    .btn-primary:hover {
+        background-color: #292524;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-brand {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 500;
+        border-radius: 9999px;
+        padding: 0.625rem 1.5rem;
+        transition: all 0.3s ease-out;
+        background: linear-gradient(135deg, #1a8917, #2bb527);
+        box-shadow: 0 4px 15px rgba(26, 137, 23, 0.3);
+    }
+
+    .btn-brand:hover {
+        box-shadow: 0 6px 25px rgba(26, 137, 23, 0.45);
+        transform: translateY(-2px);
+    }
+
+    .btn-brand:active {
+        transform: translateY(0);
+    }
+
+    /* Input fields */
+    .input-premium {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        background-color: white;
+        border: 1px solid #e7e5e4;
+        color: #1c1917;
+        font-size: 0.875rem;
+        font-weight: 400;
+        transition: all 0.3s ease-out;
+    }
+
+    .input-premium::placeholder {
+        color: #d6d3d1;
+    }
+
+    .input-premium:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(26, 137, 23, 0.12);
+        border-color: #1a8917;
+    }
+
+    .input-premium:hover {
+        border-color: #d6d3d1;
+    }
+
+    /* Card hover effect */
+    .card-hover {
+        transition: all 0.3s ease-out;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Shimmer effect for skeletons */
+    .shimmer {
+        background: linear-gradient(90deg,
+                #f5f5f4 25%,
+                #e7e5e4 37%,
+                #f5f5f4 63%);
+        background-size: 400% 100%;
+        animation: shimmer 1.8s ease-in-out infinite;
+    }
+
+    /* Nav link hover underline */
+    .nav-link {
+        position: relative;
+        color: #57534e;
+        font-weight: 400;
+        transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+        color: #1c1917;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 1px;
+        background-color: #1c1917;
+        transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    /* Divider with gradient */
+    .divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #d6d3d1, transparent);
+    }
+}
+
+@layer utilities {
+    .animate-delay-100 {
+        animation-delay: 100ms;
+    }
+
+    .animate-delay-200 {
+        animation-delay: 200ms;
+    }
+
+    .animate-delay-300 {
+        animation-delay: 300ms;
+    }
+
+    .animate-delay-400 {
+        animation-delay: 400ms;
+    }
+
+    .animate-delay-500 {
+        animation-delay: 500ms;
+    }
+}

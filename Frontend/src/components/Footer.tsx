@@ -1,21 +1,21 @@
 export const Footer = () => {
+    const links = ["Help", "Status", "About", "Careers", "Press", "Blog", "Privacy", "Rules", "Terms", "Text to speech"];
     return (
-        <div>
-            <div className="border bg-black h-0.5"></div>
-            <div className="py-6">
-                <div className="flex gap-5 justify-center items-center text-sm">
-                    <button className="text-zinc-500">Help</button>
-                    <button className="text-zinc-500">Status</button>
-                    <button className="text-zinc-500">About</button>
-                    <button className="text-zinc-500">Careers</button>
-                    <button className="text-zinc-500">Press</button>
-                    <button className="text-zinc-500">Blog</button>
-                    <button className="text-zinc-500">Privacy</button>
-                    <button className="text-zinc-500">Rules</button>
-                    <button className="text-zinc-500">Terms</button>
-                    <button className="text-zinc-500">Text to speech</button>
+        <footer className="mt-auto">
+            <div className="divider" />
+            <div className="py-6 px-8">
+                <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center">
+                    {links.map((link) => (
+                        <button
+                            key={link}
+                            className="text-ink-50 text-[13px] font-light transition-colors duration-200 hover:text-ink-400 relative group"
+                        >
+                            {link}
+                            <span className="absolute left-0 -bottom-0.5 w-0 h-px bg-ink-400 transition-all duration-300 group-hover:w-full" />
+                        </button>
+                    ))}
                 </div>
             </div>
-        </div>
-    )
-}
+        </footer>
+    );
+};
