@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from '../generated/prisma/edge.js'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 import { SignInInputs } from "akk-medium-common";
 import { SignUpInputs } from "akk-medium-common";
 
@@ -95,4 +95,36 @@ userRoute.post('/signin', async (c) => {
     return c.json({ error: 'Invalid JWT' });
   }
 });
-
+userRoute.get('/me', async (c) => {
+  const authHeader = c.req.header("Authorization") || "";
+  const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : authHeader;
+  try {
+    const payload = await verify(token, c.env.JWT_SECRET_KEY, "HS256") as { Id: string };
+    if (!payload) {
+      c.status(403);
+      return c.json({
+        error: "You are not logged In"
+      })
+    }
+    const prisma = new PrismaClient({
+      accelerateUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    const user = await prisma.user.findUnique({
+      where: {
+        id: payload.Id
+      },
+      select: {
+        name: true,
+        username: true
+      }
+    });
+    return c.json({
+      user
+    });
+  } catch (error) {
+    c.status(403);
+    return c.json({
+      error: "You are not logged In"
+    })
+  }
+}); 

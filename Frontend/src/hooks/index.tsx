@@ -10,6 +10,10 @@ type Blog = {
         name: string
     } | null
 }
+type User = {
+    name: string,
+    username: string
+}
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -37,4 +41,26 @@ export const useBlogs = () => {
     return {
         loading, blogs
     }
+}
+export const useUser = () => {
+    const [user, setUser] = useState({ name: "", username: "" });
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate('/signin')
+            return;
+        }
+        axios.get(`${Backend_URL}/api/v1/user/me`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        })
+            .then((response) => {
+                setUser(response.data.user);
+            })
+            .catch((err) => {
+                alert(err.response.data.error);
+                console.error(err);
+            })
+    }, []);
+    return { user };
 }
