@@ -25,14 +25,14 @@ export const GetStarted = () => {
 
             {/* Hero Section */}
             <div className="flex-1 flex items-center">
-                <div className="flex w-full px-8 md:px-16 lg:px-24 xl:px-36 py-12 md:py-0">
-                    <div className="max-w-3xl">
+                <div className="flex w-full py-12 md:py-0">
+                    <div className="max-w-5xl pt-40 pl-32">
                         <h1 className="font-serif leading-[0.95] tracking-tight animate-fade-in-up"
-                            style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', animationDelay: '0.1s', animationFillMode: 'both' }}>
+                            style={{ fontSize: 'clamp(3.5rem, 8vw, 10rem)', animationDelay: '0.1s', animationFillMode: 'both' }}>
                             Human
                         </h1>
                         <h1 className="font-serif leading-[0.95] tracking-tight animate-fade-in-up"
-                            style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', animationDelay: '0.25s', animationFillMode: 'both' }}>
+                            style={{ fontSize: 'clamp(3.5rem, 8vw, 10rem)', animationDelay: '0.25s', animationFillMode: 'both' }}>
                             stories & ideas
                         </h1>
 
@@ -49,7 +49,7 @@ export const GetStarted = () => {
                             Start Reading
                         </button>
                     </div>
-                    <div className="ml-auto hidden lg:flex items-center">
+                    <div className="ml-auto hidden lg:flex items-center pt-8">
                         <img
                             className="max-w-sm xl:max-w-lg animate-fade-in"
                             style={{ animationDelay: '0.3s', animationFillMode: 'both' }}

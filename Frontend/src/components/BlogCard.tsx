@@ -37,7 +37,7 @@ const BlogContent = ({ id, title, content }: { id: string; title: string; conten
                         </p>
                     </div>
                     <img
-                        className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-lg flex-shrink-0 self-start"
+                        className="w-16 h-16 md:w-24 md:h-32 object-contain rounded-lg flex-shrink-0 self-start"
                         src="/captain_america.png"
                         alt=""
                     />

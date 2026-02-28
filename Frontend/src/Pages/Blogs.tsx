@@ -20,7 +20,7 @@ export const Blogs = () => {
   return (
     <div>
       <div className="flex justify-center px-6 pt-6">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-4xl">
           {blogs.map((blog, index) => (
             <div
               key={blog.id}

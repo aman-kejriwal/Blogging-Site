@@ -53,7 +53,7 @@ export const Avatar = ({ name, size, open }: { name?: string; size?: number; ope
     const cls = sizeClasses[sz] || `w-${sz} h-${sz} text-sm`;
 
     return (
-        <div className={`${open ? "ring-2 ring-ink-400 ring-offset-2" : ""} rounded-full transition-all duration-200`}>
+        <div className={`${open ? "ring-2 ring-ink-400 ring-offset-2" : ""} rounded-full transition-all duration-90000`}>
             <div
                 className={`relative inline-flex items-center justify-center ${cls} overflow-hidden rounded-full bg-gradient-to-br ${gradient} shadow-sm`}
             >
