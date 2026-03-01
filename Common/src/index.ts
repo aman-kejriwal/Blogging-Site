@@ -1,4 +1,4 @@
-import z = require("zod");
+import { z } from "zod";
 
 
 //Singin Inputs
@@ -17,15 +17,22 @@ export const SignUpInputs = z.object({
 
 //Create Blog inputs
 export const CreateBlogInputs = z.object({
-    title: z.string,
-    content: z.string,
+    title: z.string(),
+    content: z.string(),
 })
 
 //Update Blog Inputs
 export const UpdateBlogInputs = z.object({
-    id: z.string,
-    title: z.string,
-    content: z.string,
+    id: z.string(),
+    title: z.string(),
+    content: z.string(),
+})
+
+//Google Auth Inputs
+export const GoogleAuthInput = z.object({
+    name: z.string(),
+    email: z.email(),
+    picture: z.string().optional()
 })
 
 
@@ -33,3 +40,4 @@ export type SignInInputs = z.infer<typeof SignInInputs>
 export type SignUpInputs = z.infer<typeof SignInInputs>
 export type CreateBlogInputs = z.infer<typeof CreateBlogInputs>
 export type UpdateBlogInputs = z.infer<typeof UpdateBlogInputs>
+export type GoogleAuthInput = z.infer<typeof GoogleAuthInput>

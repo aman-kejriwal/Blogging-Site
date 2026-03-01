@@ -4,6 +4,9 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign, verify } from "hono/jwt";
 import { SignInInputs } from "akk-medium-common";
 import { SignUpInputs } from "akk-medium-common";
+import { jwtDecode } from 'jwt-decode';
+
+
 
 export const userRoute = new Hono<{
   Bindings: {
@@ -54,7 +57,6 @@ userRoute.post('/signup', async (c) => {
     const jwt = await sign({ Id: user.id }, c.env.JWT_SECRET_KEY);
     return c.text(jwt);
   } catch (error) {
-    console.log("Error", error);
     c.status(403);
     return c.json({ error: 'Invalid Credentials' });
   }
@@ -91,7 +93,6 @@ userRoute.post('/signin', async (c) => {
     return c.text(jwt);
   } catch (error) {
     c.status(403);
-    console.log(error);
     return c.json({ error: 'Invalid JWT' });
   }
 });
@@ -127,4 +128,42 @@ userRoute.get('/me', async (c) => {
       error: "You are not logged In"
     })
   }
-}); 
+});
+userRoute.post('/google-auth', async (c) => {
+  const body = await c.req.json();
+  const token = body?.token;
+
+  try {
+    const decoded = jwtDecode<{ email?: string; name?: string }>(token);
+    const username = decoded?.email;
+    const name = decoded?.name;
+
+    if (!username || !name) {
+      c.status(400);
+      return c.json({ error: "Google account is missing email or name" });
+    }
+
+    const prisma = new PrismaClient({
+      accelerateUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const user = await prisma.user.findUnique({
+      where: { username }
+    });
+
+    if (user) {
+      const jwt = await sign({ Id: user.id }, c.env.JWT_SECRET_KEY);
+      return c.text(jwt);
+    } else {
+      const password = [...crypto.getRandomValues(new Uint8Array(32))].map(b => b.toString(16).padStart(2, '0')).join('');
+      const newUser = await prisma.user.create({
+        data: { username, password, name }
+      });
+      const jwt = await sign({ Id: newUser.id }, c.env.JWT_SECRET_KEY);
+      return c.text(jwt);
+    }
+  } catch (error) {
+    c.status(403);
+    return c.json({ error: "Google authentication failed" });
+  }
+});

@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState, type ChangeEventHandler } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Backend_URL } from '../../config';
+import { GoogleAuth } from "./Google-Auth";
 
 export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
     const navigate = useNavigate();
@@ -160,6 +161,7 @@ export const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
                         : 'By creating an account, you agree to our Terms of Service'
                     }
                 </p>
+                <GoogleAuth />
             </div>
         </div>
     );
