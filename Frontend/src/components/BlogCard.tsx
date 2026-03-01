@@ -25,25 +25,23 @@ const BlogContent = ({ id, title, content }: { id: string; title: string; conten
     const preview = words.length > 25 ? words.slice(0, 30).join(" ") + "..." : content;
 
     return (
-        <div className="max-w-5xl mt-3">
-            <Link to={`/blog/:${id}`} className="block group/link">
-                <div className="flex gap-6 md:gap-10">
-                    <div className="flex-1 min-w-0">
-                        <h2 className="font-extrabold text-xl md:text-2xl text-ink-400 leading-snug mb-2 group-hover/link:text-brand-600 transition-colors duration-300">
-                            {title}
-                        </h2>
-                        <p className="text-base font-source-serif font-light text-ink-100 leading-relaxed line-clamp-3">
-                            {preview}
-                        </p>
+        <div className="flex gap-6 md:gap-10">
+            <div className="max-w-5xl mt-3">
+                <Link to={`/blog/:${id}`} className="block group/link">
+                    <div className="flex gap-6 md:gap-10">
+                        <div className="flex-1 min-w-0">
+                            <h2 className="font-extrabold text-xl md:text-2xl text-ink-400 leading-snug mb-2 group-hover/link:text-brand-600 transition-colors duration-300">
+                                {title}
+                            </h2>
+                            <p className="text-base font-source-serif font-light text-ink-100 leading-relaxed line-clamp-3">
+                                {preview}
+                            </p>
+                        </div>
                     </div>
-                    <img
-                        className="w-16 h-16 md:w-24 md:h-32 object-contain rounded-lg flex-shrink-0 self-start"
-                        src="/captain_america.png"
-                        alt=""
-                    />
-                </div>
-            </Link>
-            <ContentFeatures content={content} />
+                </Link>
+                <ContentFeatures content={content} />
+            </div>
+            <img className="w-18 h-18 md:w-26 md:h-40 object-contain rounded-lg flex-shrink-0 self-start" src="/captain_america.png" alt="" />
         </div>
     );
 };
