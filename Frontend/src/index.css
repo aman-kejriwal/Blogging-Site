@@ -170,6 +170,203 @@
         height: 1px;
         background: linear-gradient(90deg, transparent, #d6d3d1, transparent);
     }
+
+    /* ======== Signup Dialog ======== */
+    .signup-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .signup-backdrop--visible {
+        opacity: 1;
+    }
+
+    .signup-modal {
+        position: relative;
+        background: #fff;
+        width: 100%;
+        max-width: 680px;
+        padding: 56px 80px 44px;
+        text-align: center;
+        transform: scale(0.96) translateY(12px);
+        opacity: 0;
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .signup-modal--visible {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+
+    /* Close button */
+    .signup-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #6b6b6b;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .signup-close:hover {
+        background: #f2f2f2;
+        color: #1c1917;
+    }
+
+    /* Content layout */
+    .signup-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-header {
+        margin-bottom: 48px;
+    }
+
+    .signup-title {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #242424;
+        letter-spacing: -0.01em;
+    }
+
+    /* Auth buttons container */
+    .signup-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 40px;
+    }
+
+    .signup-google-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .signup-google-wrapper>div {
+        width: 100%;
+    }
+
+    /* Social auth button */
+    .signup-social-btn {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 9999px;
+        border: 1px solid #242424;
+        background: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: inherit;
+        color: #242424;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    .signup-social-btn:hover {
+        background: #f7f7f7;
+    }
+
+    .signup-social-btn:active {
+        transform: scale(0.98);
+    }
+
+    .signup-social-btn span {
+        flex: 1;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .signup-social-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    /* Footer */
+    .signup-footer {
+        margin-bottom: 48px;
+    }
+
+    .signup-footer-text {
+        font-size: 15px;
+        color: #242424;
+        font-weight: 400;
+    }
+
+    .signup-footer-link {
+        font-size: 15px;
+        color: #1a8917;
+        font-weight: 700;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-family: inherit;
+        transition: color 0.2s ease;
+    }
+
+    .signup-footer-link:hover {
+        color: #0d470b;
+    }
+
+    /* Terms text */
+    .signup-terms {
+        font-size: 13px;
+        color: #6b6b6b;
+        line-height: 1.5;
+        max-width: 360px;
+    }
+
+    .signup-terms-link {
+        color: #6b6b6b;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.2s ease;
+    }
+
+    .signup-terms-link:hover {
+        color: #242424;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+        .signup-modal {
+            padding: 40px 32px 32px;
+            max-width: calc(100% - 32px);
+        }
+
+        .signup-header {
+            margin-bottom: 32px;
+        }
+
+        .signup-title {
+            font-size: 1.5rem;
+        }
+    }
 }
 
 @layer utilities {
