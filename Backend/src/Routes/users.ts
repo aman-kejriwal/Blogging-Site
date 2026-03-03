@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import { PrismaClient } from '../generated/prisma/edge.js'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign, verify } from "hono/jwt";
-import { SignInInputs } from "akk-medium-common";
 import { SignUpInputs } from "akk-medium-common";
-import { jwtDecode } from 'jwt-decode';
+import { SignInInputs } from "akk-medium-common";
+
 
 
 
@@ -131,12 +131,22 @@ userRoute.get('/me', async (c) => {
 });
 userRoute.post('/google-auth', async (c) => {
   const body = await c.req.json();
-  const token = body?.token;
+  const accessToken = body?.token;
 
   try {
-    const decoded = jwtDecode<{ email?: string; name?: string }>(token);
-    const username = decoded?.email;
-    const name = decoded?.name;
+    // Use the access token to get user info from Google
+    const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!userInfoResponse.ok) {
+      c.status(400);
+      return c.json({ error: 'Failed to verify Google token' });
+    }
+
+    const userInfo = await userInfoResponse.json() as { email?: string; name?: string };
+    const username = userInfo?.email;
+    const name = userInfo?.name;
 
     if (!username || !name) {
       c.status(400);

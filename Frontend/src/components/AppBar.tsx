@@ -4,10 +4,11 @@ import { useNavigate, useLocation } from "react-router-dom"
 import axios from "axios";
 import { Backend_URL } from "../../config";
 import { DropDownMenu } from "./DropDownMenu";
+import { Sidebar } from "./Sidebar";
 import { Link } from "react-router-dom";
 import { useUser } from "../hooks";
 
-export const AppBar = ({ title, content }: { title?: string, content?: string }) => {
+export const AppBar = ({ title, content, sidebarOpen, setSidebarOpen }: { title?: string, content?: string, sidebarOpen?: boolean, setSidebarOpen?: (open: boolean) => void }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [open, setOpen] = useState(false);
@@ -55,9 +56,24 @@ export const AppBar = ({ title, content }: { title?: string, content?: string })
                 </div>
             </div>
 
+
             {/* AppBar */}
             <div className="px-6 md:px-12 py-3 flex items-center bg-white/80 backdrop-blur-md">
                 <div className="flex items-center gap-3">
+                    {/* Hamburger menu */}
+                    {!isPublishPage && (
+                        <button
+                            className="sidebar-toggle"
+                            onClick={() => setSidebarOpen?.(!sidebarOpen)}
+                            aria-label="Open sidebar"
+                        >
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <line x1="3" y1="12" x2="17" y2="12" />
+                                <line x1="3" y1="18" x2="13" y2="18" />
+                            </svg>
+                        </button>
+                    )}
                     <Link to="/blogs" className="transition-opacity duration-200 hover:opacity-75">
                         <img className="h-10 md:h-12" src="/medium.png" alt="Medium" />
                     </Link>
@@ -131,6 +147,9 @@ export const AppBar = ({ title, content }: { title?: string, content?: string })
 
             {/* Bottom border */}
             <div className="divider" />
+
+            {/* Sidebar */}
+            <Sidebar isOpen={sidebarOpen ?? false} onClose={() => setSidebarOpen?.(false)} userName={user?.username} />
         </div>
     );
 }

@@ -7,18 +7,19 @@ import axios from "axios";
 function SignupDialogInner({ onClose, type }: { onClose: () => void, type?: 'signin' | 'signup' }) {
     const navigate = useNavigate();
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const googleLogin = useGoogleLogin({
-        flow: "auth-code",
-        onSuccess: async (codeResponse) => {
+        onSuccess: async (tokenResponse) => {
             try {
                 const res = await axios.post(`${Backend_URL}/api/v1/user/google-auth`, {
-                    token: codeResponse.code,
-                    clientId: clientId,
+                    token: tokenResponse.access_token,
                 });
                 localStorage.setItem("token", res.data);
+                setLoading(false);
                 navigate("/blogs");
             } catch (err: any) {
+                setLoading(false);
                 alert(err.response?.data?.error || "Login failed");
                 console.log(err);
             }
@@ -41,8 +42,62 @@ function SignupDialogInner({ onClose, type }: { onClose: () => void, type?: 'sig
         setVisible(false);
         setTimeout(() => onClose(), 300);
     }
+    if (loading) {
+        return (
+            <div className="signup-backdrop signup-backdrop--visible" style={{ zIndex: 9999 }}>
+                <style>{`
+                    @keyframes morphBlob {
+                        0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; transform: rotate(0deg) scale(1); }
+                        25% { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; transform: rotate(90deg) scale(1.05); }
+                        50% { border-radius: 30% 70% 40% 60% / 55% 30% 70% 45%; transform: rotate(180deg) scale(0.95); }
+                        75% { border-radius: 55% 45% 60% 40% / 40% 70% 30% 60%; transform: rotate(270deg) scale(1.02); }
+                    }
+                    @keyframes dotBounce {
+                        0%, 80%, 100% { transform: scale(0.4); opacity: 0.3; }
+                        40% { transform: scale(1); opacity: 1; }
+                    }
+                    @keyframes fadeSlideUp {
+                        from { opacity: 0; transform: translateY(12px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                `}</style>
+                <div style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px',
+                    animation: 'fadeSlideUp 0.5s ease-out'
+                }}>
+                    {/* Morphing blob */}
+                    <div style={{
+                        width: '80px', height: '80px',
+                        background: 'linear-gradient(135deg, #1a8917 0%, #0d6b0d 50%, #156d12 100%)',
+                        animation: 'morphBlob 4s ease-in-out infinite',
+                        boxShadow: '0 8px 40px rgba(26, 137, 23, 0.35)',
+                    }} />
 
+                    {/* Bouncing dots */}
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        {[0, 1, 2].map(i => (
+                            <div key={i} style={{
+                                width: '10px', height: '10px', borderRadius: '50%',
+                                backgroundColor: '#1a8917',
+                                animation: `dotBounce 1.4s ease-in-out ${i * 0.16}s infinite`,
+                            }} />
+                        ))}
+                    </div>
+
+                    {/* Text */}
+                    <p style={{
+                        color: 'rgba(41, 41, 41, 0.7)', fontSize: '15px',
+                        fontFamily: 'sohne, "Helvetica Neue", Helvetica, Arial, sans-serif',
+                        letterSpacing: '0.5px', fontWeight: 400,
+                    }}>
+                        Signing you in...
+                    </p>
+                </div>
+            </div>
+        );
+    }
     return (
+
         <div
             className={`signup-backdrop ${visible ? "signup-backdrop--visible" : ""}`}
             onClick={handleClose}
@@ -75,7 +130,10 @@ function SignupDialogInner({ onClose, type }: { onClose: () => void, type?: 'sig
                         {/* Google button — custom styled */}
                         <button
                             className="signup-social-btn"
-                            onClick={() => googleLogin()}
+                            onClick={() => {
+                                setLoading(true);
+                                googleLogin()
+                            }}
                         >
                             <svg className="signup-social-icon" viewBox="0 0 24 24">
                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
