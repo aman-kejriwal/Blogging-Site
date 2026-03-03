@@ -16,7 +16,7 @@ function App() {
           <Route path="/getstarted" element={<GetStarted />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup-dialog" element={<SignupDialog />} />
+          {/* <Route path="/signup-dialog" element={<SignupDialog />} /> */}
           <Route element={<Layout />}>
             <Route path="/blog/:id" element={<Blog />} />
             <Route path="/blogs" element={<Blogs />} />
