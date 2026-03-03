@@ -64,6 +64,12 @@ userRoute.post('/signup', async (c) => {
 
 userRoute.post('/signin', async (c) => {
   const body = await c.req.json();
+  if (!body) {
+    c.status(400);
+    return c.json({
+      error: 'Body is required'
+    })
+  }
   const parsed = SignInInputs.safeParse(body);
   if (!parsed.success) {
     c.status(411);

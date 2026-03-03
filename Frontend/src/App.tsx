@@ -7,6 +7,7 @@ import { Layout } from './Pages/Layout'
 import { Publish } from './Pages/Publish'
 import { GetStarted } from './Pages/GetStarted'
 import { SignupDialog } from './components/Signup-Dialog'
+import { Library } from './Pages/Library'
 function App() {
   return (
     <>
@@ -16,8 +17,8 @@ function App() {
           <Route path="/getstarted" element={<GetStarted />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup-dialog" element={<SignupDialog />} />
           <Route element={<Layout />}>
+            <Route path="/library" element={<Library />} />
             <Route path="/blog/:id" element={<Blog />} />
             <Route path="/blogs" element={<Blogs />} />
           </Route>

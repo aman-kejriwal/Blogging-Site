@@ -22,7 +22,7 @@ blogRoute.use('/*', async (c, next) => {
         const user = await verify(token, c.env.JWT_SECRET_KEY, 'HS256');
         if (user) {
             c.set("userId", (user as { Id: string }).Id);
-            await next();   
+            await next();
         }
         else {
             c.status(403);
@@ -128,7 +128,7 @@ blogRoute.get('/bulk', async (c) => {
     } catch (error) {
         c.status(400);
         return c.json({
-                error: 'Error while fetching the all blog posts'
+            error: 'Error while fetching the all blog posts'
         })
     }
 })
@@ -165,7 +165,27 @@ blogRoute.get('/:id', async (c) => {
         })
     }
 })
-
+blogRoute.post('/delete/:id', async (c) => {
+    const id = c.req.param("id");
+    const prisma = new PrismaClient({
+        accelerateUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    try {
+        const blog = await prisma.blog.delete({
+            where: {
+                id: id
+            }
+        })
+        return c.json({
+            blog
+        });
+    } catch (error) {
+        c.status(400);
+        return c.json({
+            error: 'Error while deleting the blog post'
+        })
+    }
+})
 
 
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjdiM2I4NGExLTdkZGItNGZhZS1iZjU0LTMwNTJhY2QzNjQwZiJ9.BUGW3RgUwVEQvKJVcJhfP62lVM1zXnoWAZqBbmIozQw
