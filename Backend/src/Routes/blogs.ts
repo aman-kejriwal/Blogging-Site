@@ -4,7 +4,6 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { verify } from "hono/jwt";
 import { CreateBlogInputs, UpdateBlogInputs } from "akk-medium-common";
 
-
 export const blogRoute = new Hono<{
     Bindings: {
         DATABASE_URL: string;
@@ -186,6 +185,71 @@ blogRoute.post('/delete/:id', async (c) => {
         })
     }
 })
+blogRoute.post('/library', async (c) => {
+    const body = await c.req.json();
+    // const parsed = CreateLibraryInputs.safeParse(body);
+    // if (!parsed.success) {
+    //     c.status(411);
+    //     return c.json({
+    //         error: 'Check the Inputs of Library'
+    //     })
+    // }
+    const authorId = c.get("userId");
+    const prisma = new PrismaClient({
+        accelerateUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
 
+    try {
+        const library = await prisma.library.create({
+            data: {
+                name: body.name,
+                userId: authorId,
+            }
+        });
+        return c.json({
+            library
+        });
+    } catch (error) {
+        c.status(400);
+        return c.json({
+            error: "Error while creating a library"
+        });
+    }
+})
+blogRoute.get('/library/bulk', async (c) => {
+    // const body = await c.req.json(); 
+    // const parsed = CreateLibraryInputs.safeParse(body);
+    // if (!parsed.success) {
+    //     c.status(411);
+    //     return c.json({
+    //         error: 'Check the Inputs of Library'
+    //     })
+    // }
+    const authorId = c.get("userId");
+    const prisma = new PrismaClient({
+        accelerateUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+    try {
+        const library = await prisma.library.findMany({
+            where: {
+                userId: authorId,
+            },
+            select: {
+                name: true,
+                userId: true,
+                id: true,
+            }
+        });
+        return c.json({
+            library
+        });
+    } catch (error) {
+        c.status(400);
+        return c.json({
+            error: "Error while fetching all libraries"
+        });
+    }
+})
 
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjdiM2I4NGExLTdkZGItNGZhZS1iZjU0LTMwNTJhY2QzNjQwZiJ9.BUGW3RgUwVEQvKJVcJhfP62lVM1zXnoWAZqBbmIozQw

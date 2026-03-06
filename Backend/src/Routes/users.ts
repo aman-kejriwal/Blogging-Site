@@ -53,6 +53,12 @@ userRoute.post('/signup', async (c) => {
         name
       },
     });
+    const library = await prisma.library.create({
+      data: {
+        userId: user.id,
+        name: "Reading List"
+      },
+    });
 
     const jwt = await sign({ Id: user.id }, c.env.JWT_SECRET_KEY);
     return c.text(jwt);
@@ -174,6 +180,12 @@ userRoute.post('/google-auth', async (c) => {
       const password = [...crypto.getRandomValues(new Uint8Array(32))].map(b => b.toString(16).padStart(2, '0')).join('');
       const newUser = await prisma.user.create({
         data: { username, password, name }
+      });
+      const library = await prisma.library.create({
+        data: {
+          userId: newUser.id,
+          name: "Reading List"
+        },
       });
       const jwt = await sign({ Id: newUser.id }, c.env.JWT_SECRET_KEY);
       return c.text(jwt);

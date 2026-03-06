@@ -14,6 +14,11 @@ type User = {
     name: string,
     username: string
 }
+type Library = {
+    name: string,
+    userId: string,
+    id: string
+}
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -63,4 +68,29 @@ export const useUser = () => {
             })
     }, []);
     return { user };
+}
+export const useLibrary = () => {
+    const [loading, setLoading] = useState(true);
+    const [library, setLibrary] = useState<Library[]>([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate('/signin')
+            return;
+        }
+        axios.get(`${Backend_URL}/api/v1/blog/library/bulk`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        })
+            .then((response) => {
+                setLoading(false);
+                setLibrary(response.data.library);
+            })
+            .catch((err) => {
+                setLoading(false);
+                alert(err.response.data.error);
+                console.error(err);
+            })
+    }, []);
+    return { library, loading };
 }

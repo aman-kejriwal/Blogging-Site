@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Avatar } from "./Avatar";
 import { Link } from "react-router-dom";
+import { LibraryPopover } from "./LibraryPopover";
 
 type BlogCardProps = {
     id: string;
@@ -48,43 +49,59 @@ const BlogContent = ({ id, title, content }: { id: string; title: string; conten
 
 const ContentFeatures = ({ content }: { content: string }) => {
     const [isBookmarkActive, setIsBookmarkActive] = useState(false);
-
+    const [isLibraryDialogOpen, setIsLibraryDialogOpen] = useState(false);
+    const bookmarkRef = useRef<HTMLButtonElement>(null);
     const readTime = Math.ceil(content.split(" ").length / 200);
 
     return (
-        <div className="flex items-center mt-4 gap-3">
-            <span className="px-3 py-1 rounded-full text-xs font-medium bg-surface-100 text-ink-100 hover:bg-surface-200 transition-colors duration-200 cursor-pointer">
-                Side Hustle
-            </span>
-            <span className="text-ink-50 text-sm font-light">
-                {readTime} min read
-            </span>
-            <div className="ml-auto flex gap-3 items-center">
-                <button
-                    className="p-1.5 rounded-full hover:bg-surface-100 transition-all duration-200 text-ink-50 hover:text-ink-300"
-                    onClick={() => setIsBookmarkActive(!isBookmarkActive)}
-                    aria-label="Bookmark"
-                >
-                    {isBookmarkActive ? (
-                        <svg className="w-5 h-5 text-ink-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                        </svg>
-                    ) : (
+        <>
+
+            <div className="flex items-center mt-4 gap-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-surface-100 text-ink-100 hover:bg-surface-200 transition-colors duration-200 cursor-pointer">
+                    Side Hustle
+                </span>
+                <span className="text-ink-50 text-sm font-light">
+                    {readTime} min read
+                </span>
+                <div className="ml-auto flex gap-3 items-center">
+                    <div className="relative flex flex-col">
+                        <button
+                            ref={bookmarkRef}
+                            className="p-1.5 rounded-full hover:bg-surface-100 transition-all duration-200 text-ink-50 hover:text-ink-300"
+                            onClick={() => {
+                                setIsBookmarkActive(!isBookmarkActive)
+                                setIsLibraryDialogOpen(!isLibraryDialogOpen);
+                            }}
+                            aria-label="Bookmark"
+                        >
+                            {isBookmarkActive ? (
+                                <svg className="w-5 h-5 text-ink-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                </svg>
+                            ) : (
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                                </svg>
+                            )}
+                        </button>
+                        <LibraryPopover
+                            isOpen={isLibraryDialogOpen}
+                            onClose={() => { setIsLibraryDialogOpen(false); setIsBookmarkActive(false); }}
+                            anchorRef={bookmarkRef}
+                        />
+                    </div>
+                    <button
+                        className="p-1.5 rounded-full hover:bg-surface-100 transition-all duration-200 text-ink-50 hover:text-ink-300"
+                        aria-label="More Options"
+                    >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                         </svg>
-                    )}
-                </button>
-                <button
-                    className="p-1.5 rounded-full hover:bg-surface-100 transition-all duration-200 text-ink-50 hover:text-ink-300"
-                    aria-label="More Options"
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+                    </button>
+                </div>
+            </div >
+        </>
+
     );
 };
 
